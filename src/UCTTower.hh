@@ -12,6 +12,8 @@
 #define hcalFlagMask 0x00004000
 #define ecalFlagMask 0x00008000
 #define stg2BitsMask 0x0000FFFF
+#define miscBitsMask 0x0000F000
+#define miscShift 12
 
 #define ecalBitsMask 0x00FF0000
 #define ecalShift 16
@@ -73,6 +75,7 @@ public:
 
   const uint32_t et() const {return (towerData & etMask);}
   const uint32_t er() const {return ((towerData & erMask) >> erShift);}
+  const uint8_t miscBits() const {return (uint8_t) ((towerData & miscBitsMask) >> miscShift);}
 
   const uint32_t getEcalET() const {return ((towerData & ecalBitsMask) >> ecalShift);}
   const uint32_t getHcalET() const {return ((towerData & hcalBitsMask) >> hcalShift);}
