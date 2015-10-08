@@ -15,5 +15,5 @@ testUCTLayer1
 	This is program uses pseudo random numbers as input to test the emulator functionality
 
 testL1TCaloLayer1.py
-	This python is input to cmsRun to test the emulator.  It needs a file with FED raw data.
-	It runs both the Layer-1 unpacker and the emulator to produce a file with CaloTowers.
+	This python is input to cmsRun to test the emulator.  It needs an EDM file with FED raw data.
+	It runs both the Layer-1 unpacker and the emulator to produce an EDM file with CaloTower collection.
