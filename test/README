@@ -1,0 +1,19 @@
+This test directory contains simple test programs and python for L1TCaloLayer1
+
+The test programs are built using "make".  The Makefile included assumes that my old mkdep_makefile is in your home directory.
+If you don't have it you can get it using:
+   pushd $HOME
+   wget http://www.hep.wisc.edu/~dasu/mkdep_makefile.tar.gz
+   tar zxf mkdep_makefile.tar.gz
+   popd
+Note that make assumes that you built the CMSSW project using scram b as usual.
+
+testUCTGeometry
+	This is a simple geometry tester which tries out most combinations of calorimeter index and Layer-1 translations
+
+testUCTLayer1
+	This is program uses pseudo random numbers as input to test the emulator functionality
+
+testL1TCaloLayer1.py
+	This python is input to cmsRun to test the emulator.  It needs a file with FED raw data.
+	It runs both the Layer-1 unpacker and the emulator to produce a file with CaloTowers.
