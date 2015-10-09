@@ -6,8 +6,6 @@
 #include "UCTTower.hh"
 
 #define RegionETMask  0x000003FF
-#define RegionEGVeto  0x00000400
-#define RegionTauVeto 0x00000800
 #define RegionLocBits 0x0000F000
 #define LocationShift 12
 
@@ -62,8 +60,6 @@ public:
   // Note that the bit fields are limited in hardware
 
   const uint32_t et() const {return (RegionETMask & regionSummary);}
-  const bool isEGammaLike() const {return !((RegionEGVeto & regionSummary) == RegionEGVeto);}
-  const bool isTauLike() const {return !((RegionTauVeto & regionSummary) == RegionTauVeto);}
 
   // More access functions
 
