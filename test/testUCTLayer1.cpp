@@ -83,8 +83,8 @@ int main(int argc, char** argv) {
 
   UCTLayer1 uctLayer1;
 
-  // Event loop
-  while (true) {
+  // Event loop - use 1M events to test
+  for(int event = 0; event < 1000000; event++) {
 
     if(!uctLayer1.clearEvent()) {
       std::cerr << "UCT: Failed to clear event" << std::endl;
