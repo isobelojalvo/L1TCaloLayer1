@@ -7,11 +7,13 @@
 
 using namespace std;
 
-#include "UCTLayer1.hh"
-#include "UCTCrate.hh"
-#include "UCTCard.hh"
-#include "UCTRegion.hh"
-#include "UCTTower.hh"
+#include "L1Trigger/L1TCaloLayer1/src/UCTLayer1.hh"
+#include "L1Trigger/L1TCaloLayer1/src/UCTCrate.hh"
+#include "L1Trigger/L1TCaloLayer1/src/UCTCard.hh"
+#include "L1Trigger/L1TCaloLayer1/src/UCTRegion.hh"
+#include "L1Trigger/L1TCaloLayer1/src/UCTTower.hh"
+
+#include "L1Trigger/L1TCaloLayer1/src/UCTGeometry.hh"
 
 double flatRandom(double min, double max) {
   static double rMax = (double) 0x7FFFFFFF;
@@ -57,7 +59,7 @@ void print(UCTLayer1& uct) {
       for(uint32_t rgn = 0; rgn < regions.size(); rgn++) {
 	if(regions[rgn]->et() > 0) {
 	  int hitEta = regions[rgn]->hitCaloEta();
-	  uint32_t hitPhi = regions[rgn]->hitCaloPhi();
+	  int hitPhi = regions[rgn]->hitCaloPhi();
 	  vector<UCTTower*> towers = regions[rgn]->getTowers();
 	  bool header = true;
 	  for(uint32_t twr = 0; twr < towers.size(); twr++) {

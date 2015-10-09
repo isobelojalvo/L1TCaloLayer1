@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#include "UCTGeometry.hh"
+#include "L1Trigger/L1TCaloLayer1/src/UCTGeometry.hh"
 
 int main(int argc, char** argv) {
   UCTGeometry g;

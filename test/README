@@ -1,12 +1,8 @@
 This test directory contains simple test programs and python for L1TCaloLayer1
 
-The test programs are built using "make".  The Makefile included assumes that my old mkdep_makefile is in your home directory.
-If you don't have it you can get it using:
-   pushd $HOME
-   wget http://www.hep.wisc.edu/~dasu/mkdep_makefile.tar.gz
-   tar zxf mkdep_makefile.tar.gz
-   popd
-Note that make assumes that you built the CMSSW project using scram b as usual.
+The test programs are built using "scram b" in the test directory and they 
+show up in the usual tmp area.  You may have to put it in your path by 
+hand as cmsenv is not doing it :(
 
 testUCTGeometry
 	This is a simple geometry tester which tries out most combinations of calorimeter index and Layer-1 translations
