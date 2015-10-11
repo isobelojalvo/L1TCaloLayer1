@@ -11,6 +11,11 @@ process.layer1EmulatorDigis.ecalTPSource = cms.InputTag("l1tCaloLayer1SpyDigis")
 process.layer1EmulatorDigis.hcalTPSource = cms.InputTag("l1tCaloLayer1SpyDigis")
 process.layer1EmulatorDigis.verbose = cms.bool(True)
 
+process.load('L1Trigger.L1TCaloLayer1.layer1Validator_cfi')
+process.layer1Validator.testSource = cms.InputTag("l1tCaloLayer1SpyDigis")
+process.layer1Validator.emulSource = cms.InputTag("layer1EmulatorDigis")
+process.layer1Validator.verbose = cms.bool(True)
+
 # Put multiples of 162 - output data for eighteen BXs are available for each capture
 # One event is created for each capture.  Putting non-multiples of 162 just means
 # that some of the events captured are "wasted".
@@ -24,6 +29,6 @@ process.out = cms.OutputModule("PoolOutputModule",
     outputCommands = cms.untracked.vstring('keep *')
 )
 
-process.p = cms.Path(process.l1tCaloLayer1SpyDigis*process.layer1EmulatorDigis)
+process.p = cms.Path(process.l1tCaloLayer1SpyDigis*process.layer1EmulatorDigis*process.layer1Validator)
 
 process.e = cms.EndPath(process.out)

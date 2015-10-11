@@ -32,8 +32,6 @@
 #include "DataFormats/EcalDigi/interface/EcalDigiCollections.h"
 #include "DataFormats/HcalDigi/interface/HcalDigiCollections.h"
 
-#include "DataFormats/L1TCalorimeter/interface/CaloTower.h"
-
 #include "L1Trigger/L1TCaloLayer1/src/UCTLayer1.hh"
 #include "L1Trigger/L1TCaloLayer1/src/UCTCrate.hh"
 #include "L1Trigger/L1TCaloLayer1/src/UCTCard.hh"
@@ -99,7 +97,8 @@ L1TCaloLayer1::L1TCaloLayer1(const edm::ParameterSet& iConfig) :
   ecalTPSourceLabel(iConfig.getParameter<edm::InputTag>("ecalTPSource").label()),
   hcalTPSource(consumes<HcalTrigPrimDigiCollection>(iConfig.getParameter<edm::InputTag>("hcalTPSource"))),
   hcalTPSourceLabel(iConfig.getParameter<edm::InputTag>("hcalTPSource").label()),
-  verbose(iConfig.getParameter<bool>("verbose")) {
+  verbose(iConfig.getParameter<bool>("verbose")) 
+{
   produces<CaloTowerBxCollection>();
   layer1 = new UCTLayer1;
 }
@@ -201,6 +200,8 @@ L1TCaloLayer1::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
       }
     }
   }  
+
+  iEvent.put(towersColl);
 
 }
 
