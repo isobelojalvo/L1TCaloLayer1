@@ -12,7 +12,7 @@ process.layer1Validator.verbose = cms.bool(True)
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
 
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('file:/afs/cern.ch/user/d/dasu/CMSSW_7_4_12_patch4/src/L1Trigger/L1TCaloLayer1/test/l1tCaloLayer1Spy+Emulator.root')
+    fileNames = cms.untracked.vstring('file:/data/dasu/l1tCaloLayer1Spy+Emulator.root')
 )
 
 process.p = cms.Path(process.layer1Validator)

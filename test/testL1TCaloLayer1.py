@@ -10,11 +10,11 @@ process.layer1EmulatorDigis.verbose = cms.bool(True)
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
 
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('file:/cms/ojalvo/Sept25_905539F2-5363-E511-831A-02163E013687.root')
+    fileNames = cms.untracked.vstring('file:/data/dasu/Sept25_905539F2-5363-E511-831A-02163E013687.root')
 )
 
 process.out = cms.OutputModule("PoolOutputModule",
-    fileName = cms.untracked.string('l1tCaloLayer1.root'),
+    fileName = cms.untracked.string('/data/dasu/l1tCaloLayer1.root'),
     outputCommands = cms.untracked.vstring('keep *')
 )
 

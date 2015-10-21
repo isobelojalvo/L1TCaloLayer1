@@ -121,13 +121,13 @@ L1TCaloLayer1Validator::analyze(const edm::Event& iEvent, const edm::EventSetup&
        int test_fb = testTower->hwQual();
        int test_em = testTower->hwEtEm();
        int test_hd = testTower->hwEtHad();
-       int emul_iEta = testTower->hwEta();
-       int emul_iPhi = testTower->hwPhi();
-       int emul_et = testTower->hwPt();
-       int emul_er = testTower->hwEtRatio();
-       int emul_fb = testTower->hwQual();
-       int emul_em = testTower->hwEtEm();
-       int emul_hd = testTower->hwEtHad();
+       int emul_iEta = emulTower->hwEta();
+       int emul_iPhi = emulTower->hwPhi();
+       int emul_et = emulTower->hwPt();
+       int emul_er = emulTower->hwEtRatio();
+       int emul_fb = emulTower->hwQual();
+       int emul_em = emulTower->hwEtEm();
+       int emul_hd = emulTower->hwEtHad();
        if(test_iEta == emul_iEta && test_iPhi == emul_iPhi) {
 	 bool success = true;
 	 if(test_et != emul_et) {if(verbose) std::cout << "ET "; success = false;}

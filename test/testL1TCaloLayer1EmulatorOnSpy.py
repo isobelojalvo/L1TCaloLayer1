@@ -16,11 +16,11 @@ process.layer1Validator.verbose = cms.bool(True)
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
 
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('file:/afs/cern.ch/user/d/dasu/CMSSW_7_4_12_patch4/src/L1Trigger/L1TCaloLayer1Spy/test/l1tCaloLayer1Spy.root')
+    fileNames = cms.untracked.vstring('file:/data/dasu/l1tCaloLayer1Spy.root')
 )
 
 process.out = cms.OutputModule("PoolOutputModule",
-    fileName = cms.untracked.string('l1tCaloLayer1Spy+Emulator.root'),
+    fileName = cms.untracked.string('/data/dasu/l1tCaloLayer1Spy+Emulator.root'),
     outputCommands = cms.untracked.vstring('keep *')
 )
 
