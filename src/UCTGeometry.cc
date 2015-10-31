@@ -130,7 +130,7 @@ uint32_t UCTGeometry::getUCTRegionPhiIndex(uint32_t crate, uint32_t card) {
       uctRegionPhiIndex = 15 + card;
     }
     else {
-      uctRegionPhiIndex = card;
+      uctRegionPhiIndex = card - 3;
     }
   }
   else if(crate == 2) {
@@ -261,82 +261,3 @@ UCTTowerIndex UCTGeometry::getUCTTowerIndex(UCTRegionIndex region, uint32_t iEta
   int towerPhi = regionPhi * NPhiInRegion + iPhi + 1;
   return UCTTowerIndex(towerEta, towerPhi);
 }
-
-UCTRegionIndex UCTGeometry::getUCTRegionNorth(UCTRegionIndex center) {
-  int eta = center.first;
-  uint32_t phi = center.second;
-  phi += 1;
-  if(phi > MaxUCTRegionsPhi) phi -= MaxUCTRegionsPhi;
-  return UCTRegionIndex(eta, phi);
-}
-
-UCTRegionIndex UCTGeometry::getUCTRegionSouth(UCTRegionIndex center) {
-  int eta = center.first;
-  uint32_t phi = center.second;
-  phi -= 1;
-  if(phi == 0) phi = MaxUCTRegionsPhi;
-  return UCTRegionIndex(eta, phi);
-}
-
-UCTRegionIndex UCTGeometry::getUCTRegionEast(UCTRegionIndex center) {
-  int eta = center.first;
-  uint32_t phi = center.second;
-  eta += 1;
-  if(eta == 0) eta = 1; // eta = 0 is illegal, go one above
-  if(eta > MaxUCTRegionsEta) eta = 0; // beyond high Eta edge - should not be used
-  return UCTRegionIndex(eta, phi);
-}
-
-UCTRegionIndex UCTGeometry::getUCTRegionWest(UCTRegionIndex center) {
-  int eta = center.first;
-  uint32_t phi = center.second;
-  eta -= 1;
-  if(eta == 0) eta = -1; // eta = 0 is illegal, go one below
-  if(eta < -MaxUCTRegionsEta) eta = 0; // beyond high Eta edge - should not be used
-  return UCTRegionIndex(eta, phi);
-}
-
-UCTRegionIndex UCTGeometry::getUCTRegionNE(UCTRegionIndex center) {
-  int eta = center.first;
-  uint32_t phi = center.second;
-  phi += 1;
-  if(phi > MaxUCTRegionsPhi) phi -= MaxUCTRegionsPhi;
-  eta += 1;
-  if(eta == 0) eta = 1; // eta = 0 is illegal, go one above
-  if(eta > MaxUCTRegionsEta) eta = 0; // beyond high Eta edge - should not be used
-  return UCTRegionIndex(eta, phi);
-}
-
-UCTRegionIndex UCTGeometry::getUCTRegionNW(UCTRegionIndex center) {
-  int eta = center.first;
-  uint32_t phi = center.second;
-  phi += 1;
-  if(phi > MaxUCTRegionsPhi) phi -= MaxUCTRegionsPhi;
-  eta -= 1;
-  if(eta == 0) eta = -1; // eta = 0 is illegal, go one below
-  if(eta < -MaxUCTRegionsEta) eta = 0; // beyond high Eta edge - should not be used
-  return UCTRegionIndex(eta, phi);
-}
-
-UCTRegionIndex UCTGeometry::getUCTRegionSE(UCTRegionIndex center) {
-  int eta = center.first;
-  uint32_t phi = center.second;
-  phi -= 1;
-  if(phi == 0) phi = MaxUCTRegionsPhi;
-  eta += 1;
-  if(eta == 0) eta = 1; // eta = 0 is illegal, go one above
-  if(eta > MaxUCTRegionsEta) eta = 0; // beyond high Eta edge - should not be used
-  return UCTRegionIndex(eta, phi);
-}
-
-UCTRegionIndex UCTGeometry::getUCTRegionSW(UCTRegionIndex center) {
-  int eta = center.first;
-  uint32_t phi = center.second;
-  phi -= 1;
-  if(phi == 0) phi = MaxUCTRegionsPhi;
-  eta -= 1;
-  if(eta == 0) eta = -1; // eta = 0 is illegal, go one below
-  if(eta < -MaxUCTRegionsEta) eta = 0; // beyond high Eta edge - should not be used
-  return UCTRegionIndex(eta, phi);
-}
-

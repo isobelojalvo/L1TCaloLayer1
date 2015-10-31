@@ -127,7 +127,10 @@ public:
   // nearest-neighbor for all but global objects like TotalET, HT, MET, MHT
   // In those cases, we loop over all regions.
 
-  uint32_t getUCTRegionPhiIndex(int caloPhi) {return ((caloPhi - 1) / 4);}
+  uint32_t getUCTRegionPhiIndex(int caloPhi) {
+    if(caloPhi < 71) return ((caloPhi + 1) / 4);
+    else return 17;
+  }
   uint32_t getUCTRegionEtaIndex(int caloEta) {
     // Region index is same for all phi; so get for phi = 1
     uint32_t rgn = getRegion(caloEta, 1);
@@ -136,29 +139,22 @@ public:
   }
 
   uint32_t getUCTRegionPhiIndex(uint32_t crate, uint32_t card);
+
   int getUCTRegionEtaIndex(bool negativeSide, uint32_t region) {
     if(!checkRegion(region)) return 0xDEADBEEF;
     if(negativeSide) return -(region + 1);
     else return (region + 1);
   }
+
   UCTRegionIndex getUCTRegionIndex(UCTTowerIndex caloTower) {
     return getUCTRegionIndex(caloTower.first, caloTower.second);
   }
+
   UCTRegionIndex getUCTRegionIndex(int caloEta, int caloPhi);
+
   UCTRegionIndex getUCTRegionIndex(bool negativeSide, uint32_t crate, uint32_t card, uint32_t region);
-  UCTRegionIndex getUCTRegionNorth(UCTRegionIndex center);
-  UCTRegionIndex getUCTRegionSouth(UCTRegionIndex center);
-  UCTRegionIndex getUCTRegionEast(UCTRegionIndex center);
-  UCTRegionIndex getUCTRegionWest(UCTRegionIndex center);
-  UCTRegionIndex getUCTRegionNE(UCTRegionIndex center);
-  UCTRegionIndex getUCTRegionNW(UCTRegionIndex center);
-  UCTRegionIndex getUCTRegionSE(UCTRegionIndex center);
-  UCTRegionIndex getUCTRegionSW(UCTRegionIndex center);
 
   UCTTowerIndex getUCTTowerIndex(UCTRegionIndex r, uint32_t iEta = 0, uint32_t iPhi = 0);
-
-  bool areNeighbors(UCTTowerIndex a, UCTTowerIndex b) {return false;}
-  bool isEdgeTower(UCTTowerIndex a) {return false;}
 
 };
 

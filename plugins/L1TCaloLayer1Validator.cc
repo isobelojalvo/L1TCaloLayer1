@@ -64,8 +64,10 @@ class L1TCaloLayer1Validator : public edm::EDAnalyzer {
 
   uint32_t eventCount;
   uint32_t badEventCount;
-  uint32_t bxCount;
-  uint32_t badBXCount;
+  uint32_t towerCount;
+  uint32_t badTowerCount;
+  uint32_t nonZeroTowerCount;
+  uint32_t badNonZeroTowerCount;
 
   bool verbose;
 
@@ -87,8 +89,10 @@ L1TCaloLayer1Validator::L1TCaloLayer1Validator(const edm::ParameterSet& iConfig)
   emulSource(consumes<CaloTowerBxCollection>(iConfig.getParameter<edm::InputTag>("emulSource"))),
   eventCount(0),
   badEventCount(0),
-  bxCount(0),
-  badBXCount(0),
+  towerCount(0),
+  badTowerCount(0),
+  nonZeroTowerCount(0),
+  badNonZeroTowerCount(0),
   verbose(iConfig.getParameter<bool>("verbose")) {}
 
 L1TCaloLayer1Validator::~L1TCaloLayer1Validator() {}
@@ -119,41 +123,48 @@ L1TCaloLayer1Validator::analyze(const edm::Event& iEvent, const edm::EventSetup&
        int test_et = testTower->hwPt();
        int test_er = testTower->hwEtRatio();
        int test_fb = testTower->hwQual();
-       int test_em = testTower->hwEtEm();
-       int test_hd = testTower->hwEtHad();
        int emul_iEta = emulTower->hwEta();
        int emul_iPhi = emulTower->hwPhi();
        int emul_et = emulTower->hwPt();
        int emul_er = emulTower->hwEtRatio();
        int emul_fb = emulTower->hwQual();
-       int emul_em = emulTower->hwEtEm();
-       int emul_hd = emulTower->hwEtHad();
+       bool success = true;
        if(test_iEta == emul_iEta && test_iPhi == emul_iPhi) {
-	 bool success = true;
-	 if(test_et != emul_et) {if(verbose) std::cout << "ET "; success = false;}
-	 if(test_er != emul_er) {if(verbose) std::cout << "ER "; success = false;}
-	 if(test_fb != emul_fb) {if(verbose) std::cout << "FB "; success = false;}
-	 if(test_em != emul_em) {if(verbose) std::cout << "EM "; success = false;}
-	 if(test_hd != emul_hd) {if(verbose) std::cout << "HD "; success = false;}
+	 if(test_et != emul_et) {success = false;}
+	 if(test_er != emul_er) {success = false;}
+	 if(test_fb != emul_fb) {success = false;}
 	 if(!success) {
+	   if(test_et != emul_et) {if(verbose) std::cout << "ET ";}
+	   if(test_er != emul_er) {if(verbose) std::cout << "ER ";}
+	   if(test_fb != emul_fb) {if(verbose) std::cout << "FB ";}
 	   if(verbose) std::cout << "Checks failed for ("
 				 << test_iEta << ", "
 				 << test_iPhi << ") : ("
 				 << test_et << ", "
 				 << test_er << ", "
-				 << test_fb << ", "
-				 << test_em << ", "
-				 << test_hd << ") != "
+				 << test_fb << ") != ("
 				 << emul_et << ", "
 				 << emul_er << ", "
-				 << emul_fb << ", "
-				 << emul_em << ", "
-				 << emul_hd << ")" << std::endl;
+				 << emul_fb << ")" << std::endl;
 	   badEvent = true;
-	   badBXCount++;
+	   badTowerCount++;
+	   if(test_et > 0) badNonZeroTowerCount++;
 	 }
-	 bxCount++;
-	 break;
+	 towerCount++;
+	 if(test_et > 0) nonZeroTowerCount++;
+       }
+       if(!success && test_et == emul_et && test_iPhi == emul_iPhi && test_et > 3) {
+	   if(verbose) std::cout << "Incidental match for ("
+				 << test_iEta << ", "
+				 << test_iPhi << ") : ("
+				 << test_et << ", "
+				 << test_er << ", "
+				 << test_fb << ") != ("
+				 << emul_iEta <<","
+				 << emul_iPhi<<") :("
+				 << emul_et << ", "
+				 << emul_er << ", "
+				 << emul_fb << ")" << std::endl;
        }
      }
    }
@@ -171,8 +182,9 @@ L1TCaloLayer1Validator::beginJob()
 void 
 L1TCaloLayer1Validator::endJob() 
 {
-  std::cout << "L1TCaloLayer1Vaidator: Summary is Bad BX / Event Count = ("
-	    << badBXCount << " of " << bxCount << ") / ("
+  std::cout << "L1TCaloLayer1Vaidator: Summary is Non-Zero Bad Tower / Bad Tower / Event Count = ("
+	    << badNonZeroTowerCount << " of " << nonZeroTowerCount << ") / ("
+	    << badTowerCount << " of " << towerCount << ") / ("
 	    << badEventCount << " of " << eventCount << ")" << std::endl;
 }
 

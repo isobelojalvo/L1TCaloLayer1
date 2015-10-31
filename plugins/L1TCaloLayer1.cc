@@ -134,10 +134,11 @@ L1TCaloLayer1::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
     int caloEta = ecalTp.id().ieta();
     int caloPhi = ecalTp.id().iphi();
     int et = ecalTp.compressedEt();
-    bool fgVeto = (ecalTp.fineGrain() != 0);
-    if(et != 0 && fgVeto) {
+    bool fgVeto = ecalTp.fineGrain();
+    if(et != 0) {
+      if(et>10) std::cout<<"NonZero ET: "<<et<<" : "<<caloEta<<" :"<<caloPhi<<std::endl;
       UCTTowerIndex t = UCTTowerIndex(caloEta, caloPhi);
-      if(!layer1->setECALData(t, et, fgVeto)) {
+      if(!layer1->setECALData(t,fgVeto,et)) {
 	std::cerr << "UCT: Failed loading an ECAL tower" << std::endl;
 	return;
       }
@@ -150,31 +151,35 @@ L1TCaloLayer1::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
     int caloPhi = hcalTp.id().iphi();
     int et = hcalTp.SOI_compressedEt();
     bool fg = hcalTp.SOI_fineGrain();
-    if(et != 0 && fg) {
+    if(et != 0) {
       UCTTowerIndex t = UCTTowerIndex(caloEta, caloPhi);
       uint32_t featureBits = 0;
       if(fg) featureBits = 0x1F; // Set all five feature bits for the moment - they are not defined in HW / FW yet!
       if(!layer1->setHCALData(t, et, featureBits)) {
 	std::cerr << "UCT: Failed loading an HCAL tower" << std::endl;
 	return;
+
       }
       expectedTotalET += et;
     }
   }
   
-  // Process
+  
+   //Process
   if(!layer1->process()) {
     std::cerr << "UCT: Failed to process layer 1" << std::endl;
   }
   
+  
   // Crude check if total ET is approximately OK!
   // We can't expect exact match as there is region level saturation to 10-bits
   // 1% is good enough
-  if(verbose && (layer1->et() - expectedTotalET) < - (0.01 * expectedTotalET) ) {
+  int diff = abs(layer1->et() - expectedTotalET);
+  if(verbose && diff > 0.01 * expectedTotalET ) {
     print();
     std::cout << "Expected " 
 	      << std::showbase << std::internal << std::setfill('0') << std::setw(10) << std::hex
-	      << expectedTotalET << std::endl;
+	      << expectedTotalET << std::dec << std::endl;
   }
 
   int theBX = 0; // Currently we only read and process the "hit" BX only

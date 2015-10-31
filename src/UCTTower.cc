@@ -14,7 +14,7 @@ bool UCTTower::process() {
   if(ecalET == 0 || hcalET == 0) {
     er = 0;
     towerData |= zeroFlagMask;
-    if(hcalET == 0)
+    if(hcalET == 0 && ecalET != 0)
       towerData |= eohrFlagMask;
   }
   else if(ecalET == hcalET) {
