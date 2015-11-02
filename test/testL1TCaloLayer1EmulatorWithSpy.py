@@ -1,11 +1,17 @@
 import FWCore.ParameterSet.Config as cms
 
+from FWCore.ParameterSet.VarParsing import VarParsing
+
+options = VarParsing()
+options.register('setupString', "captures:/data/dasu/Layer1ZeroBiasCaptureData/r260490_1", VarParsing.multiplicity.singleton, VarParsing.varType.string, 'L1TCaloLayer1Spy setupString')
+options.parseArguments()
+
 process = cms.Process("Layer1EmulatorWithSpy")
 
 process.load("FWCore.MessageService.MessageLogger_cfi")
 
 process.load('L1Trigger.L1TCaloLayer1Spy.l1tCaloLayer1SpyDigis_cfi')
-process.l1tCaloLayer1SpyDigis.setupString = cms.untracked.string("captures:/data/dasu/Layer1ZeroBiasCaptureData/r260490_1")
+process.l1tCaloLayer1SpyDigis.setupString = cms.untracked.string(options.setupString)
 
 process.load('L1Trigger.L1TCaloLayer1.layer1EmulatorDigis_cfi')
 process.layer1EmulatorDigis.ecalTPSource = cms.InputTag("l1tCaloLayer1SpyDigis")
