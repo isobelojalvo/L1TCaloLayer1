@@ -13,7 +13,7 @@ process.layer1Validator.testSource = cms.InputTag("l1tCaloLayer1SpyDigis")
 process.layer1Validator.emulSource = cms.InputTag("layer1EmulatorDigis")
 process.layer1Validator.verbose = cms.bool(True)
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(2) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(162) )
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring('file:/data/dasu/l1tCaloLayer1Spy.root')

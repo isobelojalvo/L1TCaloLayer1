@@ -30,7 +30,7 @@ bool UCTTower::process() {
     er = (uint32_t) log2(((double) hcalET) / ((double) ecalET));
     if(er > erMaxV) er = erMaxV;
   }
-  towerData |= (er >> erShift);
+  towerData |= (er << erShift);
   // Unfortunately, hcalFlag is presently bogus :(
   // It has never been studied nor used in Run-1
   // The same status persists in Run-2, but it is available usage
