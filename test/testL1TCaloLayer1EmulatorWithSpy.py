@@ -5,6 +5,7 @@ process = cms.Process("Layer1EmulatorWithSpy")
 process.load("FWCore.MessageService.MessageLogger_cfi")
 
 process.load('L1Trigger.L1TCaloLayer1Spy.l1tCaloLayer1SpyDigis_cfi')
+process.l1tCaloLayer1SpyDigis.setupString = cms.untracked.string("captures:/data/dasu/Layer1ZeroBiasCaptureData/r260490_1")
 
 process.load('L1Trigger.L1TCaloLayer1.layer1EmulatorDigis_cfi')
 process.layer1EmulatorDigis.ecalTPSource = cms.InputTag("l1tCaloLayer1SpyDigis")
