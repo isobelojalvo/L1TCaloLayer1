@@ -4,6 +4,7 @@ from FWCore.ParameterSet.VarParsing import VarParsing
 
 options = VarParsing()
 options.register('setupString', "captures:/data/dasu/Layer1ZeroBiasCaptureData/r260490_1", VarParsing.multiplicity.singleton, VarParsing.varType.string, 'L1TCaloLayer1Spy setupString')
+options.register('maxEvents', 162, VarParsing.multiplicity.singleton, VarParsing.varType.int, 'Maximum number of evnets')
 options.parseArguments()
 
 process = cms.Process("Layer1EmulatorWithSpy")
@@ -27,7 +28,7 @@ process.layer1Validator.verbose = cms.bool(True)
 # One event is created for each capture.  Putting non-multiples of 162 just means
 # that some of the events captured are "wasted".
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(162) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(options.maxEvents) )
 
 process.source = cms.Source("EmptySource")
 

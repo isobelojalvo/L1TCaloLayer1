@@ -35,7 +35,7 @@ bool UCTTower::process() {
   // It has never been studied nor used in Run-1
   // The same status persists in Run-2, but it is available usage
   // Currently, summarize all hcalFeatureBits in one flag bit
-  if(hcalFB != 0) towerData |= hcalFlagMask;
+  if((hcalFB & 0x1) != 0) towerData |= hcalFlagMask; // FIXME - ignore top bits if(hcalFB != 0)
   if(ecalFG) towerData |= ecalFlagMask;
   // Store ecal and hcal calibrated ET in unused upper bits
   towerData |= (ecalET << ecalShift);
@@ -61,10 +61,10 @@ bool UCTTower::setHCALData(uint32_t hET, uint32_t hFB) {
     std::cerr << "UCTTower::setData - ecalET too high " << hET << "; Pegged to 0xFF" << std::endl;
     hcalET = 0xFF;
   }
-  if(hFB > 0x1F) {
+  if(hFB > 0x3F) {
     std::cerr << "UCTTower::setData - too many hcalFeatureBits " << std::hex << hFB 
-	      << "; Used only bottom 5 bits" << std::endl;
-    hcalFB &= 0x1F;
+	      << "; Used only bottom 6 bits" << std::endl;
+    hcalFB &= 0x3F;
   }
   return true;
 }

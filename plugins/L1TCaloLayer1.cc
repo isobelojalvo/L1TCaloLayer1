@@ -136,7 +136,6 @@ L1TCaloLayer1::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
     int et = ecalTp.compressedEt();
     bool fgVeto = ecalTp.fineGrain();
     if(et != 0) {
-      if(et>10) std::cout<<"NonZero ET: "<<et<<" : "<<caloEta<<" :"<<caloPhi<<std::endl;
       UCTTowerIndex t = UCTTowerIndex(caloEta, caloPhi);
       if(!layer1->setECALData(t,fgVeto,et)) {
 	std::cerr << "UCT: Failed loading an ECAL tower" << std::endl;
