@@ -33,6 +33,10 @@ bool UCTLayer1::clearEvent() {
 }
 
 const UCTRegion* UCTLayer1::getRegion(int regionEtaIndex, uint32_t regionPhiIndex) const {
+  if(regionEtaIndex == 0 || regionEtaIndex < -7 || regionEtaIndex > 7 ||
+     regionPhiIndex <= 0 || regionPhiIndex >= 19) {
+    return 0;
+  }
   // Get (0,0) tower region information
   UCTGeometry g;
   UCTRegionIndex r = UCTRegionIndex(regionEtaIndex, regionPhiIndex);

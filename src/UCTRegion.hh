@@ -40,7 +40,7 @@ public:
     return towers[highestTowerLocation]->caloEta();
   }
 
-  const uint32_t hitCaloPhi() const {
+  const int hitCaloPhi() const {
     uint32_t highestTowerLocation = location();
     return towers[highestTowerLocation]->caloPhi();
   }
@@ -88,6 +88,8 @@ private:
   // No equality operator is needed
 
   const UCTRegion& operator=(const UCTRegion&);
+
+protected:
 
   // Helper functions
 

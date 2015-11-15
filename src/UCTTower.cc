@@ -116,9 +116,9 @@ void UCTTower::print(bool header) {
 	    << iEta << " "
 	    << std::showbase << std::internal << std::setfill('0') << std::setw(4) << std::hex
 	    << iPhi << " "
-	    << std::showbase << std::internal << std::setfill('0') << std::setw(4) << std::hex
+	    << std::setw(4) << std::dec
 	    << g.getCaloEtaIndex(negativeEta, region, iEta) << " "
-	    << std::showbase << std::internal << std::setfill('0') << std::setw(4) << std::hex
+	    << std::setw(4) << std::dec
 	    << g.getCaloPhiIndex(crate, card, region, iPhi) << " "
 	    << std::showbase << std::internal << std::setfill('0') << std::setw(4) << std::hex
 	    << ecalET << " "

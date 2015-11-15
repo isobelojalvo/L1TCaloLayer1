@@ -81,14 +81,14 @@ void print(UCTLayer1& uct) {
 
 int main(int argc, char** argv) {
 
-  int nEvents = 1000000;
+  int nEvents = 10000;
   if(argc == 1) std::cout << "Running on " << nEvents << std::endl;
   else if(argc == 2) nEvents = atoi(argv[1]);
   else {std::cout << "Command syntax: testUCTLayer1 [nEvents]" << std::endl; return 1;}
 
   UCTLayer1 uctLayer1;
 
-  // Event loop - use 1M events to test
+  // Event loop for test
   for(int event = 0; event < nEvents; event++) {
 
     if(!uctLayer1.clearEvent()) {
@@ -144,10 +144,10 @@ int main(int argc, char** argv) {
 
     // Crude check if total ET is approximately OK!
     // We can't expect exact match as there is region level saturation to 10-bits
-    // 1% is good enough
+    // 10% is good enough
     int diff = uctLayer1.et() - expectedTotalET;
     if(diff < 0) diff = diff * -1;
-    if(diff > (0.01 * expectedTotalET) ) {
+    if(diff > (0.10 * expectedTotalET) ) {
       print(uctLayer1);
       std::cout << "Expected " 
 		<< std::showbase << std::internal << std::setfill('0') << std::setw(10) << std::hex
