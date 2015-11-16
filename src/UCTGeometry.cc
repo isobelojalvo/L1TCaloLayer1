@@ -261,3 +261,36 @@ UCTTowerIndex UCTGeometry::getUCTTowerIndex(UCTRegionIndex region, uint32_t iEta
   int towerPhi = regionPhi * NPhiInRegion + iPhi;
   return UCTTowerIndex(towerEta, towerPhi);
 }
+
+double UCTGeometry::getUCTTowerEta(int caloEta) {
+  static bool first = true;
+  static double twrEtaValues[29];
+  if(first) {
+    twrEtaValues[0] = 0;
+    for(unsigned int i = 0; i < 20; i++) {
+      twrEtaValues[i + 1] = 0.0436 + i * 0.0872;
+    }
+    twrEtaValues[21] = 1.785;
+    twrEtaValues[22] = 1.880;
+    twrEtaValues[23] = 1.9865;
+    twrEtaValues[24] = 2.1075;
+    twrEtaValues[25] = 2.247;
+    twrEtaValues[26] = 2.411;
+    twrEtaValues[27] = 2.575;
+    twrEtaValues[28] = 2.825;
+    first = false;
+  }
+  uint32_t absCaloEta = abs(caloEta);
+  if(absCaloEta <= 28) return twrEtaValues[absCaloEta];
+  else return -999.;
+}
+
+double UCTGeometry::getUCTTowerPhi(int caloPhi, int caloEta) {
+  if(caloPhi < 0) return -999.;
+  uint32_t absCaloEta = abs(caloEta) - 1;
+  uint32_t absCaloPhi = abs(caloPhi) - 1;
+  if(absCaloEta < 28 && absCaloPhi < 72) return (((double) absCaloPhi + 0.5) * 0.0872);
+  else if(absCaloEta < 41 && absCaloPhi < 36) return (((double) absCaloPhi + 0.5) * 0.0872 * 2);
+  else if(absCaloEta < 41 && absCaloPhi < 18) return (((double) absCaloPhi + 0.5) * 0.0872 * 4);
+  else return -999.;
+}
