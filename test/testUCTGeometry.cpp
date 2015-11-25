@@ -21,12 +21,17 @@ int main(int argc, char** argv) {
       int cEta = g.getCaloEtaIndex((caloEta < 0), rgn, eta);
       int cPhi = g.getCaloPhiIndex(crt, crd, rgn, phi);
       if(cEta != caloEta || cPhi != caloPhi) {
-	cout << "(caloEta, caloPhi) = (" << caloEta << ", " << caloPhi << ") "
+	cerr << "(caloEta, caloPhi) = (" << caloEta << ", " << caloPhi << ") "
 	     << "(crt,crd,rgn,eta,phi) = ("
 	     << crt << ", " << crd << ", " << rgn << ", " << eta << ", " << phi << ")" << endl; 
 	cerr << "(caloEta, caloPhi) = (" << cEta << ", " << cPhi << ") " 
 	     << "Obtained instead   " << endl;
       }
+      double realEta = g.getUCTTowerEta(caloEta);
+      double realPhi = g.getUCTTowerPhi(caloPhi, caloEta);
+      cout << "(caloEta, caloPhi) = (" << caloEta << ", " << caloPhi << ") ;" 
+	   << "(realEta, realPhi) = (" << realEta << ", " << realPhi << ") "
+	   << endl;
     }
   }
   return 0;
