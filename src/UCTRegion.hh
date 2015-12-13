@@ -6,6 +6,8 @@
 #include "UCTTower.hh"
 
 #define RegionETMask  0x000003FF
+#define RegionEGVeto  0x00000400
+#define RegionTauVeto 0x00000800
 #define RegionLocBits 0x0000F000
 #define LocationShift 12
 
@@ -72,6 +74,9 @@ public:
   const UCTTower* getTower(UCTTowerIndex t) const {
     return getTower(t.first, t.second);
   }
+
+  const bool isEGammaLike() const {return !((RegionEGVeto & regionSummary) == RegionEGVeto);}
+  const bool isTauLike() const {return !((RegionTauVeto & regionSummary) == RegionTauVeto);}
 
   void print();
   
